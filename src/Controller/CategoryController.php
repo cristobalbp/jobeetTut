@@ -17,10 +17,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Doctrine\ORM\EntityManagerInterface;
 
+use App\Service\JobHistoryService;
+
 
 class CategoryController extends AbstractController
 {
-    /**
+     /**
      * Finds and displays a category entity.
      *
      * @Route(
@@ -32,15 +34,17 @@ class CategoryController extends AbstractController
      * )
      *
      * @param Category $category
-     * @param PaginatorInterface $paginator
      * @param int $page
+     * @param PaginatorInterface $paginator
+     * @param JobHistoryService $jobHistoryService
      *
      * @return Response
      */
     public function show(
         Category $category,
+        int $page,
         PaginatorInterface $paginator,
-        int $page
+        JobHistoryService $jobHistoryService
     ) : Response {
         $activeJobs = $paginator->paginate(
             $this->getDoctrine()->getRepository(Job::class)->getPaginatedActiveJobsByCategoryQuery($category),
@@ -51,9 +55,9 @@ class CategoryController extends AbstractController
         return $this->render('category/show.html.twig', [
             'category' => $category,
             'activeJobs' => $activeJobs,
+            'historyJobs' => $jobHistoryService->getJobs(),
         ]);
     }
-
 
         /**
      * Create category.

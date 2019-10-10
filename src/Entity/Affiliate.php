@@ -45,12 +45,14 @@ class Affiliate
      */
     private $active;
 
-    /**
+     /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
+
+
 
     /**
      * @var Category[]|ArrayCollection
@@ -163,6 +165,14 @@ class Affiliate
     }
 
     /**
+     */
+    public function setCreatedAt($createdAt): self
+    {
+        $this->createdAt = $createdAt;
+        return $this;
+    }
+
+    /**
      * @return Category[]|ArrayCollection
      */
     public function getCategories()
@@ -196,11 +206,12 @@ class Affiliate
         return $this;
     }
 
-      /**
+    /**
      * @ORM\PrePersist
      */
     public function prePersist()
     {
+        dump(¨asdasd¨);
         $this->createdAt = new \DateTime();
     }
 }
