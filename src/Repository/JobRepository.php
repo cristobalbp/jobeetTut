@@ -18,7 +18,9 @@ class JobRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('j')
             ->where('j.expiresAt > :date')
+            ->andWhere('j.activated = :activated')
             ->setParameter('date', new \DateTime())
+            ->setParameter('activated', true)
             ->orderBy('j.expiresAt', 'DESC');
 
         if ($categoryId) {
@@ -29,24 +31,25 @@ class JobRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-
     /**
-    * @param int $id
-    *
-    * @return Job|null
-    */
+     * @param int $id
+     *
+     * @throws NonUniqueResultException
+     *
+     * @return Job|null
+     */
     public function findActiveJob(int $id) : ?Job
     {
         return $this->createQueryBuilder('j')
             ->where('j.id = :id')
             ->andWhere('j.expiresAt > :date')
+            ->andWhere('j.activated = :activated')
             ->setParameter('id', $id)
             ->setParameter('date', new \DateTime())
+            ->setParameter('activated', true)
             ->getQuery()
             ->getOneOrNullResult();
     }
-
-
 
     /**
      * @param Category $category
@@ -58,10 +61,10 @@ class JobRepository extends EntityRepository
         return $this->createQueryBuilder('j')
             ->where('j.category = :category')
             ->andWhere('j.expiresAt > :date')
+            ->andWhere('j.activated = :activated')
             ->setParameter('category', $category)
             ->setParameter('date', new \DateTime())
+            ->setParameter('activated', true)
             ->getQuery();
     }
-
-    
 }

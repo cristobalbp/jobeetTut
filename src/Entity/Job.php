@@ -179,25 +179,25 @@ class Job
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getLogo() : ?string
-    {
-        return $this->logo;
-    }
+/**
+ * @return string|null|UploadedFile
+ */
+public function getLogo()
+{
+    return $this->logo;
+}
 
-    /**
-     * @param string|null $logo
-     *
-     * @return self
-     */
-    public function setLogo(?string $logo) : self
-    {
-        $this->logo = $logo;
+/**
+ * @param string|null|UploadedFile $logo
+ *
+ * @return self
+ */
+public function setLogo($logo) : self
+{
+    $this->logo = $logo;
 
-        return $this;
-    }
+    return $this;
+}
 
     /**
      * @return string|null
