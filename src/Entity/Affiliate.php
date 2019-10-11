@@ -2,9 +2,11 @@
 namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Service\MailService;
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\AffiliateRepository")
  * @ORM\Table(name="affiliates")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Affiliate
 {
@@ -211,7 +213,8 @@ class Affiliate
      */
     public function prePersist()
     {
-        dump(¨asdasd¨);
+        
         $this->createdAt = new \DateTime();
+
     }
 }
